@@ -4,3 +4,5 @@ matplotlib
 scikit-learn
 tensorflow
 lightgbm
+seaborn
+japanize_matplotlib

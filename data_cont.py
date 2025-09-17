@@ -33,7 +33,8 @@ data_1['日付け'] = pd.to_datetime(data_1['日付け'])
 data_1 = data_1.sort_values('日付け',ascending=True).reset_index(drop=True)
 data_1['次の日の終値'] = data_1['終値'].shift(-1)
 
-print(data_1.describe())
+#データの平均,max,min,標準偏差を調べる
+#print(data_1.describe())
 
 data_1['range'] = data_1['高値'] - data_1['安値']
 data_1['sf_range'] = data_1['終値'] - data_1['始値']
@@ -49,34 +50,6 @@ target = '次の日の終値'
 X = data_final[features].values
 y = data_final[target].values.reshape(-1,1)
 
-"""
-##LightBGMによる特徴量の重要度を測る際に使用可能
-lgb_X = pd.DataFrame(X,columns=features)
-lgb_y = pd.DataFrame(y)
-
-model = lgb.LGBMRegressor(random_state=42)
-model.fit(lgb_X,lgb_y)
-
-importance = model.feature_importances_
-feature_name = lgb_X.columns
-
-
-feature_importance_df = pd.DataFrame({
-    'feature': feature_name, 
-    'importance': importance
-}).sort_values('importance', ascending=False)
-
-print("---特徴量の重要度---")
-print(feature_importance_df)
-
-plt.figure(figsize=(10,6))
-plt.barh(feature_importance_df['feature'],feature_importance_df['importance'])
-plt.xlabel('重要度')
-plt.ylabel('特徴量')
-plt.title('LightGBMによる特徴量の重要度')
-plt.gca().invert_yaxis()
-plt.show()
-#"""
 
 #データを分割
 train_size = int(len(X) * 0.8)
